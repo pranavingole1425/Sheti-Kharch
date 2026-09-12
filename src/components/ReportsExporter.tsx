@@ -3,7 +3,9 @@ import { useFarm } from '../context/FarmContext';
 import { AnalyticsCharts } from './AnalyticsCharts';
 import { exportFarmReportPDF, exportAllFarmsReportPDF } from '../utils/pdfExport';
 import { exportExpensesToCSV } from '../utils/csvExport';
-import { FileText, Download, BarChart3, Printer } from 'lucide-react';
+import { formatFarmSummaryShareText, formatAllFarmsSummaryShareText } from '../utils/shareUtils';
+import { calculateFarmTotals } from '../utils/calculations';
+import { FileText, Download, BarChart3, Printer, Share2 } from 'lucide-react';
 
 export const ReportsExporter: React.FC = () => {
   const {
@@ -12,6 +14,9 @@ export const ReportsExporter: React.FC = () => {
     expenses,
     crops,
     selectedFarm,
+    farmerProfile,
+    allFarmsSummary,
+    openShareModal,
     language,
     t
   } = useFarm();
@@ -41,6 +46,23 @@ export const ReportsExporter: React.FC = () => {
     }
   };
 
+  const handleShareReport = () => {
+    if (reportType === 'single' && currentFarm) {
+      const totals = calculateFarmTotals(currentFarm, expenses);
+      const text = formatFarmSummaryShareText(currentFarm, totals, farmerProfile, language);
+      openShareModal({
+        title: `${t.shareReport} - ${currentFarm.name}`,
+        text
+      });
+    } else {
+      const text = formatAllFarmsSummaryShareText(allFarmsSummary, farmerProfile, language);
+      openShareModal({
+        title: t.shareReport,
+        text
+      });
+    }
+  };
+
   return (
     <div className="space-y-4 pb-20">
       {/* Banner */}
@@ -53,23 +75,30 @@ export const ReportsExporter: React.FC = () => {
             📊 {t.reports}
           </h2>
           <p className="text-xs text-farm-100 mt-0.5">
-            Download PDF statements and CSV spreadsheets for accounting
+            Download PDF statements, CSV spreadsheets, and share summary reports
           </p>
         </div>
 
-        <div className="flex items-center space-x-2">
+        <div className="flex flex-wrap items-center gap-2">
           <button
-            onClick={handleExportPDF}
+            onClick={handleShareReport}
             className="bg-amber-400 hover:bg-amber-300 text-farm-950 font-black px-3.5 py-2.5 rounded-2xl shadow-md flex items-center space-x-1.5 text-xs active:scale-95 transition-all"
           >
-            <FileText className="w-4 h-4" />
+            <Share2 className="w-4 h-4" />
+            <span>{t.shareReport}</span>
+          </button>
+          <button
+            onClick={handleExportPDF}
+            className="bg-white hover:bg-gray-100 text-farm-900 font-extrabold px-3 py-2.5 rounded-2xl shadow-md flex items-center space-x-1.5 text-xs active:scale-95 transition-all"
+          >
+            <FileText className="w-4 h-4 text-farm-800" />
             <span>{t.exportPdf}</span>
           </button>
           <button
             onClick={handleExportCSV}
-            className="bg-white hover:bg-gray-100 text-farm-900 font-extrabold px-3.5 py-2.5 rounded-2xl shadow-md flex items-center space-x-1.5 text-xs active:scale-95 transition-all"
+            className="bg-farm-800 hover:bg-farm-950 text-white font-extrabold px-3 py-2.5 rounded-2xl shadow-md flex items-center space-x-1.5 text-xs active:scale-95 transition-all border border-farm-600"
           >
-            <Download className="w-4 h-4" />
+            <Download className="w-4 h-4 text-amber-300" />
             <span>{t.exportCsv}</span>
           </button>
         </div>

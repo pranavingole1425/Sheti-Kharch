@@ -11,6 +11,8 @@ import { ExpenseFormModal } from './components/ExpenseFormModal';
 import { AllFarmsSummary } from './components/AllFarmsSummary';
 import { ReportsExporter } from './components/ReportsExporter';
 import { SettingsView } from './components/SettingsView';
+import { ShareModal } from './components/ShareModal';
+import { FarmerLoginModal } from './components/FarmerLoginModal';
 
 const MainContent: React.FC = () => {
   const { selectedFarm, activeTab } = useFarm();
@@ -47,6 +49,8 @@ export function App() {
         <FarmFormModal />
         <ExpenseFormModal />
         <PinLockModal />
+        <ShareModal />
+        <FarmerLoginModal />
         <ToastContainer />
       </div>
     </FarmProvider>

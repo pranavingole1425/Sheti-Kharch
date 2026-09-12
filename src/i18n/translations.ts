@@ -152,6 +152,26 @@ export interface Translations {
   errRequiredCategory: string;
   errRequiredProduct: string;
   errSelectFarm: string;
+
+  // Share & Farmer Login
+  share: string;
+  shareApp: string;
+  shareReport: string;
+  shareSummary: string;
+  shareViaWhatsapp: string;
+  copyToClipboard: string;
+  copiedToClipboard: string;
+  shareExpense: string;
+  farmerLogin: string;
+  farmerProfile: string;
+  loginAsFarmer: string;
+  farmerName: string;
+  mobileNumber: string;
+  village: string;
+  saveProfile: string;
+  welcomeFarmer: string;
+  logoutFarmer: string;
+  farmerLoggedInSuccess: string;
 }
 
 export const translations: Record<Language, Translations> = {
@@ -296,7 +316,26 @@ export const translations: Record<Language, Translations> = {
     errRequiredAmount: 'खर्चाची रक्कम ० पेक्षा जास्त असणे आवश्यक आहे.',
     errRequiredCategory: 'कृपया वर्गवारी निवडा.',
     errRequiredProduct: 'कृपया खर्चाचे किंवा वस्तूचे नाव टाका.',
-    errSelectFarm: 'कृपया खर्च जोडण्यासाठी शेत निवडा.'
+    errSelectFarm: 'कृपया खर्च जोडण्यासाठी शेत निवडा.',
+
+    share: 'शेअर करा',
+    shareApp: 'ॲप शेअर करा',
+    shareReport: 'अहवाल शेअर करा',
+    shareSummary: 'सारांश शेअर करा',
+    shareViaWhatsapp: 'WhatsApp वर शेअर करा',
+    copyToClipboard: 'माहिती कॉपी करा',
+    copiedToClipboard: 'माहिती क्लिपबोर्डवर कॉपी झाली!',
+    shareExpense: 'खर्च शेअर करा',
+    farmerLogin: 'शेतकरी लॉगिन',
+    farmerProfile: 'शेतकरी प्रोफाईल',
+    loginAsFarmer: '🧑‍🌾 शेतकरी म्हणून लॉगिन करा',
+    farmerName: 'शेतकऱ्याचे नाव',
+    mobileNumber: 'मोबाईल नंबर',
+    village: 'गाव / परिसर',
+    saveProfile: '💾 प्रोफाईल जतन करा',
+    welcomeFarmer: 'सुस्वागतम',
+    logoutFarmer: 'लॉगआउट करा',
+    farmerLoggedInSuccess: 'शेतकरी लॉगिन यशस्वी!'
   },
   en: {
     appName: 'SHETI KHARCHA',
@@ -439,7 +478,26 @@ export const translations: Record<Language, Translations> = {
     errRequiredAmount: 'Amount must be greater than 0.',
     errRequiredCategory: 'Please select a category.',
     errRequiredProduct: 'Please enter product or expense name.',
-    errSelectFarm: 'Please select a farm for this expense.'
+    errSelectFarm: 'Please select a farm for this expense.',
+
+    share: 'Share',
+    shareApp: 'Share App',
+    shareReport: 'Share Report',
+    shareSummary: 'Share Summary',
+    shareViaWhatsapp: 'Share on WhatsApp',
+    copyToClipboard: 'Copy Summary',
+    copiedToClipboard: 'Summary copied to clipboard!',
+    shareExpense: 'Share Expense',
+    farmerLogin: 'Farmer Login',
+    farmerProfile: 'Farmer Profile',
+    loginAsFarmer: '🧑‍🌾 Login as Farmer',
+    farmerName: 'Farmer Name',
+    mobileNumber: 'Mobile Number',
+    village: 'Village / Location',
+    saveProfile: '💾 Save Profile',
+    welcomeFarmer: 'Welcome',
+    logoutFarmer: 'Logout',
+    farmerLoggedInSuccess: 'Farmer logged in successfully!'
   }
 };
 

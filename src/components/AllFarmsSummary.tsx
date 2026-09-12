@@ -1,30 +1,57 @@
 import React from 'react';
 import { useFarm } from '../context/FarmContext';
 import { categoryLabels } from '../i18n/translations';
-import { BarChart3, Sprout, Map, ChevronRight, Layers } from 'lucide-react';
+import { formatAllFarmsSummaryShareText } from '../utils/shareUtils';
+import { BarChart3, Sprout, Map, ChevronRight, Layers, Share2 } from 'lucide-react';
 
 export const AllFarmsSummary: React.FC = () => {
-  const { allFarmsSummary, setSelectedFarmId, setActiveTab, t } = useFarm();
+  const {
+    allFarmsSummary,
+    setSelectedFarmId,
+    setActiveTab,
+    farmerProfile,
+    openShareModal,
+    language,
+    t
+  } = useFarm();
+
+  const handleShareCombined = () => {
+    const text = formatAllFarmsSummaryShareText(allFarmsSummary, farmerProfile, language);
+    openShareModal({
+      title: t.allFarmsSummary,
+      text
+    });
+  };
 
   return (
     <div className="space-y-4 pb-20">
       {/* Banner */}
-      <div className="bg-gradient-to-r from-amber-600 via-farm-800 to-farm-900 text-white rounded-3xl p-5 shadow-xl">
-        <div className="flex items-center justify-between mb-1">
-          <span className="bg-amber-400 text-farm-950 text-[10px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider">
-            Combined View
-          </span>
-          <span className="text-xs text-amber-200 font-semibold">
-            {allFarmsSummary.totalFarms} Active Farms
-          </span>
+      <div className="bg-gradient-to-r from-amber-600 via-farm-800 to-farm-900 text-white rounded-3xl p-5 shadow-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div>
+          <div className="flex items-center space-x-2 mb-1">
+            <span className="bg-amber-400 text-farm-950 text-[10px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+              Combined View
+            </span>
+            <span className="text-xs text-amber-200 font-semibold">
+              {allFarmsSummary.totalFarms} Active Farms
+            </span>
+          </div>
+
+          <h2 className="text-xl sm:text-2xl font-black text-white tracking-tight">
+            📊 {t.allFarmsSummary}
+          </h2>
+          <p className="text-xs text-farm-100/90 mt-0.5">
+            Comprehensive financial insights across all fields
+          </p>
         </div>
 
-        <h2 className="text-xl sm:text-2xl font-black text-white tracking-tight">
-          📊 {t.allFarmsSummary}
-        </h2>
-        <p className="text-xs text-farm-100/90 mt-0.5">
-          Comprehensive financial insights across all fields
-        </p>
+        <button
+          onClick={handleShareCombined}
+          className="bg-amber-400 hover:bg-amber-300 text-farm-950 font-black px-4 py-2.5 rounded-2xl shadow-md flex items-center space-x-1.5 text-xs active:scale-95 transition-all self-start sm:self-auto"
+        >
+          <Share2 className="w-4 h-4" />
+          <span>{t.shareSummary}</span>
+        </button>
       </div>
 
       {/* Top 4 Metrics Grid */}

@@ -64,6 +64,19 @@ interface FarmContextType {
   updateExpense: (id: number, expense: Partial<Expense>) => Promise<void>;
   deleteExpense: (id: number) => Promise<void>;
 
+  // Farmer Profile & Login
+  farmerProfile: import('../types').FarmerProfile | null;
+  loginFarmer: (profile: { name: string; phone?: string; village?: string }) => Promise<void>;
+  logoutFarmer: () => Promise<void>;
+  isFarmerLoginOpen: boolean;
+  setIsFarmerLoginOpen: (open: boolean) => void;
+
+  // Share Modal
+  isShareModalOpen: boolean;
+  setIsShareModalOpen: (open: boolean) => void;
+  shareModalData: { title?: string; text?: string; url?: string } | null;
+  openShareModal: (data: { title?: string; text?: string; url?: string }) => void;
+
   // Modals & UI controls
   isFarmFormOpen: boolean;
   setIsFarmFormOpen: (open: boolean) => void;
@@ -212,6 +225,41 @@ export const FarmProvider: React.FC<{ children: React.ReactNode }> = ({ children
       });
       showToast(t.pinSaved);
     }
+  };
+
+  // Farmer Profile & Login Modal
+  const [isFarmerLoginOpen, setIsFarmerLoginOpen] = useState<boolean>(false);
+
+  // Share Modal
+  const [isShareModalOpen, setIsShareModalOpen] = useState<boolean>(false);
+  const [shareModalData, setShareModalData] = useState<{ title?: string; text?: string; url?: string } | null>(null);
+
+  const openShareModal = (data: { title?: string; text?: string; url?: string }) => {
+    setShareModalData(data);
+    setIsShareModalOpen(true);
+  };
+
+  const farmerProfile = settings?.farmerProfile || null;
+
+  const loginFarmer = async (profile: { name: string; phone?: string; village?: string }) => {
+    const fullProfile = { ...profile, isLoggedIn: true };
+    if (settings) {
+      await db.settings.put({
+        ...settings,
+        farmerProfile: fullProfile
+      });
+    }
+    showToast(t.farmerLoggedInSuccess || 'Farmer logged in successfully!');
+  };
+
+  const logoutFarmer = async () => {
+    if (settings) {
+      await db.settings.put({
+        ...settings,
+        farmerProfile: { name: '', phone: '', village: '', isLoggedIn: false }
+      });
+    }
+    showToast('Logged out');
   };
 
   const disableAppLock = async () => {
@@ -394,7 +442,16 @@ export const FarmProvider: React.FC<{ children: React.ReactNode }> = ({ children
         removeToast,
         clearDemoData: clearDemo,
         clearAllData,
-        seedDemo
+        seedDemo,
+        farmerProfile,
+        loginFarmer,
+        logoutFarmer,
+        isFarmerLoginOpen,
+        setIsFarmerLoginOpen,
+        isShareModalOpen,
+        setIsShareModalOpen,
+        shareModalData,
+        openShareModal
       }}
     >
       {children}

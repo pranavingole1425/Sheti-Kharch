@@ -57,12 +57,20 @@ export interface Expense {
   updatedAt: string;
 }
 
+export interface FarmerProfile {
+  name: string;
+  phone?: string;
+  village?: string;
+  isLoggedIn: boolean;
+}
+
 export interface Settings {
   id?: number;
   key: string;
   language: Language;
   appLockEnabled: boolean;
   pinHash?: string;
+  farmerProfile?: FarmerProfile;
   preferences?: Record<string, any>;
   hasDemoData?: boolean;
 }

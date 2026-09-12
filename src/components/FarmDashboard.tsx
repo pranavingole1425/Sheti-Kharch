@@ -4,6 +4,7 @@ import { ExpenseHistory } from './ExpenseHistory';
 import { CropManager } from './CropManager';
 import { calculateFarmTotals } from '../utils/calculations';
 import { categoryLabels } from '../i18n/translations';
+import { formatFarmSummaryShareText } from '../utils/shareUtils';
 import {
   Plus,
   History,
@@ -18,7 +19,8 @@ import {
   TrendingUp,
   Clock,
   Layers,
-  FileText
+  FileText,
+  Share2
 } from 'lucide-react';
 
 export const FarmDashboard: React.FC = () => {
@@ -35,6 +37,9 @@ export const FarmDashboard: React.FC = () => {
     deleteFarm,
     archiveFarm,
     setActiveTab,
+    farmerProfile,
+    openShareModal,
+    language,
     t
   } = useFarm();
 
@@ -66,6 +71,20 @@ export const FarmDashboard: React.FC = () => {
           </button>
 
           <div className="flex items-center space-x-2">
+            <button
+              onClick={() => {
+                const text = formatFarmSummaryShareText(selectedFarm, selectedFarmTotals, farmerProfile, language);
+                openShareModal({
+                  title: `${t.shareSummary} - ${selectedFarm.name}`,
+                  text
+                });
+              }}
+              className="p-2 bg-amber-400 hover:bg-amber-300 text-farm-950 rounded-xl text-xs font-bold flex items-center space-x-1 shadow"
+              title={t.shareSummary}
+            >
+              <Share2 className="w-4 h-4" />
+              <span className="hidden sm:inline">{t.share}</span>
+            </button>
             <button
               onClick={() => {
                 setEditingFarm(selectedFarm);

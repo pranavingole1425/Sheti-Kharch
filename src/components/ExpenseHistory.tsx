@@ -3,7 +3,8 @@ import { useFarm } from '../context/FarmContext';
 import { filterExpenses } from '../utils/calculations';
 import { categoryLabels } from '../i18n/translations';
 import { Expense, ExpenseCategory } from '../types';
-import { Search, Filter, Calendar, Edit2, Trash2, Tag, Plus, ShoppingBag } from 'lucide-react';
+import { formatExpenseItemShareText } from '../utils/shareUtils';
+import { Search, Filter, Calendar, Edit2, Trash2, Tag, Plus, ShoppingBag, Share2 } from 'lucide-react';
 
 interface ExpenseHistoryProps {
   farmId?: number;
@@ -18,6 +19,8 @@ export const ExpenseHistory: React.FC<ExpenseHistoryProps> = ({ farmId, limit })
     setEditingExpense,
     setIsExpenseFormOpen,
     deleteExpense,
+    openShareModal,
+    language,
     t
   } = useFarm();
 
@@ -193,6 +196,19 @@ export const ExpenseHistory: React.FC<ExpenseHistoryProps> = ({ farmId, limit })
                   </div>
 
                   <div className="flex items-center space-x-1 opacity-90 group-hover:opacity-100">
+                    <button
+                      onClick={() => {
+                        const text = formatExpenseItemShareText(item, farm?.name, language);
+                        openShareModal({
+                          title: `${t.shareExpense} - ${item.productName}`,
+                          text
+                        });
+                      }}
+                      className="p-1.5 hover:bg-amber-50 text-gray-500 hover:text-amber-700 rounded-lg transition-all"
+                      title={t.shareExpense}
+                    >
+                      <Share2 className="w-3.5 h-3.5" />
+                    </button>
                     <button
                       onClick={() => {
                         setEditingExpense(item);

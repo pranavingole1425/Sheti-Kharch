@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useFarm } from '../context/FarmContext';
-import { Globe, ArrowLeft, Lock, BarChart2, Download, Smartphone } from 'lucide-react';
+import { formatAppShareText } from '../utils/shareUtils';
+import { Globe, ArrowLeft, Lock, BarChart2, Download, Smartphone, Share2, User, UserCheck } from 'lucide-react';
 
 export const Header: React.FC = () => {
   const {
@@ -11,7 +12,10 @@ export const Header: React.FC = () => {
     setSelectedFarmId,
     activeTab,
     setActiveTab,
-    settings
+    settings,
+    farmerProfile,
+    setIsFarmerLoginOpen,
+    openShareModal
   } = useFarm();
 
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
@@ -41,6 +45,14 @@ export const Header: React.FC = () => {
           : 'To install the app, tap Chrome menu (⋮) and select "Add to Home Screen".'
       );
     }
+  };
+
+  const handleShareApp = () => {
+    const shareText = formatAppShareText(language);
+    openShareModal({
+      title: t.shareApp,
+      text: shareText
+    });
   };
 
   const toggleLanguage = () => {
@@ -84,42 +96,49 @@ export const Header: React.FC = () => {
         </div>
 
         <div className="flex items-center space-x-1.5 sm:space-x-2">
+          {/* Farmer Login Badge */}
+          <button
+            onClick={() => setIsFarmerLoginOpen(true)}
+            className={`px-2.5 py-1.5 rounded-xl font-bold text-xs flex items-center space-x-1 shadow-sm transition-all active:scale-95 ${
+              farmerProfile?.isLoggedIn && farmerProfile.name
+                ? 'bg-amber-400 text-farm-950 font-black'
+                : 'bg-farm-700/80 hover:bg-farm-700 text-amber-300 border border-amber-400/40'
+            }`}
+            title={t.farmerLogin}
+          >
+            {farmerProfile?.isLoggedIn && farmerProfile.name ? (
+              <>
+                <UserCheck className="w-3.5 h-3.5 text-emerald-800" />
+                <span className="max-w-[70px] sm:max-w-[100px] truncate">{farmerProfile.name}</span>
+              </>
+            ) : (
+              <>
+                <User className="w-3.5 h-3.5" />
+                <span className="hidden sm:inline">{t.loginAsFarmer}</span>
+                <span className="sm:hidden">Login</span>
+              </>
+            )}
+          </button>
+
+          {/* Share App Button */}
+          <button
+            onClick={handleShareApp}
+            className="p-1.5 sm:p-2 rounded-xl bg-farm-700/70 hover:bg-farm-700 text-amber-300 text-xs font-bold flex items-center space-x-1 shadow-sm transition-all active:scale-95"
+            title={t.shareApp}
+          >
+            <Share2 className="w-4 h-4" />
+          </button>
+
           {/* Download Project Docx Guide Button */}
           <a
             href="/HOW_TO_RUN_THIS_PROJECT.docx"
             download="HOW_TO_RUN_THIS_PROJECT.docx"
-            className="px-2 py-1.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-farm-950 font-extrabold text-[11px] sm:text-xs flex items-center space-x-1 shadow-sm transition-all active:scale-95"
+            className="px-2 py-1.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-farm-950 font-extrabold text-[11px] sm:text-xs flex items-center space-x-1 shadow-sm transition-all active:scale-95 hidden lg:flex"
             title="Download User & Setup Guide (.docx)"
           >
             <Download className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">Guide (.docx)</span>
+            <span>Guide</span>
           </a>
-
-          {/* PWA Install App Button */}
-          <button
-            onClick={handleInstallClick}
-            className="px-2 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-[11px] sm:text-xs flex items-center space-x-1 shadow-sm transition-all active:scale-95"
-            title="Install App / ॲप डाउनलोड करा"
-          >
-            <Smartphone className="w-3.5 h-3.5 text-amber-300" />
-            <span className="hidden md:inline">Install App</span>
-          </button>
-
-          {/* Quick All Farms Summary Button */}
-          <button
-            onClick={() => {
-              setSelectedFarmId(null);
-              setActiveTab('all_summary');
-            }}
-            className={`p-1.5 sm:p-2 rounded-xl text-xs font-bold flex items-center space-x-1 transition-all ${
-              activeTab === 'all_summary' && !selectedFarm
-                ? 'bg-amber-400 text-farm-950 shadow'
-                : 'bg-farm-700/70 text-farm-100 hover:bg-farm-700'
-            }`}
-            title={t.allFarmsSummary}
-          >
-            <BarChart2 className="w-4 h-4" />
-          </button>
 
           {/* Language Toggle Button */}
           <button
@@ -142,3 +161,4 @@ export const Header: React.FC = () => {
     </header>
   );
 };
+
