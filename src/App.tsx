@@ -13,12 +13,13 @@ import { ReportsExporter } from './components/ReportsExporter';
 import { SettingsView } from './components/SettingsView';
 import { ShareModal } from './components/ShareModal';
 import { FarmerLoginModal } from './components/FarmerLoginModal';
+import { BackgroundEffects } from './components/BackgroundEffects';
 
 const MainContent: React.FC = () => {
   const { selectedFarm, activeTab } = useFarm();
 
   return (
-    <main className="max-w-4xl mx-auto px-4 py-4 min-h-[calc(100vh-120px)]">
+    <main className="max-w-4xl mx-auto px-4 py-4 min-h-[calc(100vh-120px)] relative z-10">
       {/* Dynamic View Router */}
       {selectedFarm ? (
         <FarmDashboard />
@@ -40,10 +41,13 @@ const MainContent: React.FC = () => {
 export function App() {
   return (
     <FarmProvider>
-      <div className="min-h-screen bg-gradient-to-br from-emerald-50/50 via-gray-50 to-amber-50/30 font-sans text-gray-900 selection:bg-farm-600 selection:text-white antialiased">
-        <Header />
-        <MainContent />
-        <BottomNav />
+      <div className="min-h-screen bg-gradient-to-br from-emerald-50/70 via-gray-50 to-amber-50/40 font-sans text-gray-900 selection:bg-farm-600 selection:text-white antialiased relative">
+        <BackgroundEffects />
+        <div className="relative z-10">
+          <Header />
+          <MainContent />
+          <BottomNav />
+        </div>
 
         {/* Global Modals & Overlays */}
         <FarmFormModal />
