@@ -1,0 +1,26 @@
+{
+  "short_name": "शेती खर्चा",
+  "name": "SHETI KHARCHA - शेती खर्चा",
+  "description": "शेतीचा प्रत्येक खर्च, आता आपल्या मोबाईलमध्ये. Digital Farm-Wise Expense Diary for Farmers.",
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#f0fdf4",
+  "theme_color": "#166534",
+  "display": "standalone",
+  "orientation": "portrait",
+  "scope": "/",
+  "categories": ["finance", "productivity", "utilities"]
+}
