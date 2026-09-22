@@ -126,6 +126,37 @@ Downloadable setup guides are embedded directly inside the app under **Settings 
 - `HOW_TO_RUN_THIS_PROJECT.docx` (Microsoft Word Document)
 - `HOW_TO_RUN_THIS_PROJECT.md` (Markdown File)
 
+## 🌐 Deployment Guide (100% Production Ready)
+
+The project is fully configured and ready for 1-click deployment across all major static hosting and cloud platforms:
+
+### 1. Deploy on Vercel
+- Already configured with `vercel.json` for SPA routing and PWA Service Worker caching.
+- Connect your GitHub repository on [vercel.com](https://vercel.com).
+- Vercel will automatically detect the settings:
+  - **Framework Preset**: Vite
+  - **Build Command**: `npm run build`
+  - **Output Directory**: `dist`
+
+### 2. Deploy on Netlify
+- Configured with `netlify.toml` and `public/_redirects`.
+- Connect your GitHub repository on [netlify.com](https://netlify.com).
+- Click **Deploy Site** — all redirects and PWA manifest headers are applied automatically.
+
+### 3. Deploy on GitHub Pages (Automated CI/CD)
+- A GitHub Actions workflow is provided in `.github/workflows/deploy.yml`.
+- Go to your GitHub repository -> **Settings** -> **Pages** -> under **Source**, select **GitHub Actions**.
+- Any push to `main` will automatically build and deploy the app to `https://<your-username>.github.io/<repo-name>/`.
+
+### 4. Deploy with Docker
+```bash
+# Build Docker image
+docker build -t sheti-kharcha .
+
+# Run container on port 80
+docker run -p 80:80 sheti-kharcha
+```
+
 ---
 
 ## 👤 Author & License

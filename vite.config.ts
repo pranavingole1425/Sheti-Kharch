@@ -6,5 +6,18 @@ export default defineConfig({
   server: {
     port: 3000,
     host: true
+  },
+  build: {
+    chunkSizeWarningLimit: 1000,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'vendor-react': ['react', 'react-dom'],
+          'vendor-icons': ['lucide-react'],
+          'vendor-db': ['dexie', 'dexie-react-hooks'],
+          'vendor-pdf': ['jspdf', 'jspdf-autotable']
+        }
+      }
+    }
   }
 });
