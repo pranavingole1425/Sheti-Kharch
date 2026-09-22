@@ -14,7 +14,6 @@
       "source": "/sw.js",
       "headers": [
         {
-          "aria-label": "Cache-Control",
           "key": "Cache-Control",
           "value": "public, max-age=0, must-revalidate"
         },
